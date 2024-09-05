@@ -61,7 +61,7 @@ class AllUserDetail(ListAPIView):
     
 
 class UserProfileDetail(RetrieveAPIView):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     # For fetching details of the logged in user
     def get(self, request):
         user = request.user
