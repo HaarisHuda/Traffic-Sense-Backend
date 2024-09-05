@@ -46,7 +46,6 @@ class User(AbstractBaseUser):
     name = models.CharField(max_length=255)
     phn = models.IntegerField(default=1234)
     is_admin = models.BooleanField(default=False)
-    updated_at = models.DateTimeField(auto_now=True)
     # to do may add bank details like ac no etc
     objects = UserManager()
 
