@@ -6,7 +6,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         style={'input_type': 'password'}, 
         write_only=True
     )
-    phn = serializers.CharField(required=True)
 
     class Meta:
         model = User
@@ -14,12 +13,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True}
         }
-
+    # validating password and confirm password while registration
     def validate(self, attrs):
         return attrs
-
-    def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+    
     
 class UserLoginSerializer(serializers.ModelSerializer):
     email= serializers.EmailField(max_length=255)

@@ -4,8 +4,10 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 # Create your models here.
 # custom user manager 
 class UserManager(BaseUserManager):
-    def create_user(self, email,name,phn,password=None,):
- 
+    def create_user(self, email,name,phn,password=None, password2 = None):
+        """
+        Creates and saves a User with the given email, name and password.
+        """
         if not email:
             raise ValueError("Users must have an email address")
 
@@ -41,14 +43,16 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    name = models.CharField(max_length=255) 
-    phn = models.IntegerField(default=1234, unique=True)
-    is_active = models.BooleanField(default=True)
+    name = models.CharField(max_length=255)
+    phn = models.IntegerField(default=1234)
     is_admin = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    # to do may add bank details like ac no etc
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["name","phn"]
+    REQUIRED_FIELDS = ["name","phn",]
 
     def __str__(self):
         return self.email
