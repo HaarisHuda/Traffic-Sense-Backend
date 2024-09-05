@@ -2,19 +2,30 @@ from rest_framework import serializers
 from .models import User, UserManager, Report
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
-    password2 = serializers.CharField(
-        style={'input_type': 'password'}, 
-        write_only=True
-    )
 
     class Meta:
         model = User
-        fields = ['email', 'name', 'password', 'password2', 'phn']
+        fields = ['email', 'name', 'password', 'phn']
         extra_kwargs = {
             'password': {'write_only': True}
         }
-    # validating password and confirm password while registration
+
     def validate(self, attrs):
+        email = attrs.get('email')
+        name = attrs.get('name')
+        password = attrs.get('password')
+        phn = attrs.get('phn')
+
+        # Check that all fields are provided
+        if not email:
+            raise serializers.ValidationError({"email": "This field is required."})
+        if not name:
+            raise serializers.ValidationError({"name": "This field is required."})
+        if not password:
+            raise serializers.ValidationError({"password": "This field is required."})
+        if not phn:
+            raise serializers.ValidationError({"phn": "This field is required."})
+
         return attrs
     
     
